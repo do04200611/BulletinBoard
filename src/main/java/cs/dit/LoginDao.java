@@ -173,7 +173,7 @@ public class LoginDao {
 	            pstmt.setString(3, dto.getCONTENT());
 	            pstmt.setString(4, dto.getWRITER());
 	           
-	            	            pstmt.close();
+	            pstmt.close();
 	            
 	        } 
 	        
