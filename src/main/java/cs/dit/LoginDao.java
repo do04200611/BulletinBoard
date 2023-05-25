@@ -140,17 +140,19 @@ public class LoginDao {
 
 	
 	public void delete(int bcode) {
-	    String sql = "DELETE FROM dbcp WHERE bcode=?";
-	    try (Connection con = getConnection(); 
-	         PreparedStatement pstmt = con.prepareStatement(sql);) {
-	        pstmt.setInt(1, bcode); // id를 SUBJECT에 대입
+	    String sql = "DELETE FROM dbcp WHERE BCODE=?";
+	    try (Connection con = getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setInt(1, bcode);
 	        pstmt.executeUpdate();
+	        pstmt.close();
 	    } catch (Exception e) {
-	        e.printStackTrace();
+	        System.out.println(e.toString());
 	    }
 	}
+
 	public void update(int bcode, LoginDto dto) {
-		
+		int result = 0;
 	    String sql = "UPDATE dbcp SET SUBJECT=?, CONTENT=?, WRITER=?, REGDATE =?  WHERE BCODE=?";
 	    try (Connection con = getConnection();
 	         PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -159,9 +161,10 @@ public class LoginDao {
 	        pstmt.setString(3, dto.getWRITER());
 	        pstmt.setInt(4, dto.getBCODE());
 	        pstmt.setDate(5, dto.getREGDATE());
-	        pstmt.executeUpdate();
+	      result =  pstmt.executeUpdate();
+	      pstmt.close();
 	    } catch (Exception e) {
-	        e.printStackTrace();
+	       System.out.println(e.toString());
 	    }
 	}
 
