@@ -49,7 +49,7 @@
 			%>
 			
 			<tr>
-				<td><a href="updateForm.jsp?id=<%=dto.getBCODE() %>"><%=dto.getBCODE() %></a></td>
+				<td><a href="insertUpdateForm.jsp?id=<%=dto.getBCODE() %>"><%=dto.getBCODE() %></a></td>
 				<td><%=dto.getSUBJECT()%></td>
 				<td><%=dto.getCONTENT()%></td>
 				<td><%=dto.getWRITER()%></td>

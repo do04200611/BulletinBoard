@@ -6,7 +6,13 @@
     
 <%		
 	String bcode = request.getParameter("bcode");
-	
-
-
+	LoginDao dao = new LoginDao();
+	dao.delete(Integer.parseInt(bcode));
 %>
+
+<script type="text/javascript">
+	let ans = alert("삭제되었습니다!");
+	if(!ans){
+		location.href ='list.jsp';
+	}
+</script>

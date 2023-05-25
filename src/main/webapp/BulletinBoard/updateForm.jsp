@@ -48,4 +48,6 @@ dto = dao.selectOne(bcode); // bcode 변수 사용
 	    </div>
 	    <div class="form-group">
 	      <label for="REGDATE">작성일:</label>
+	      <input type="text" class="form-control" id="WRITER" name="WRITER" value="<%=dto.getWRITER()%>">
+	    </div>
 	     

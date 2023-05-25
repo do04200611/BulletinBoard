@@ -17,28 +17,31 @@
     
 
 <%
-	request.setCharacterEncoding("utf-8");
-	
+    request.setCharacterEncoding("utf-8");
 
-	String SUBJECT = request.getParameter("SUBJECT");
-	String CONTENT = request.getParameter("CONTENT");
-	String WRITER = request.getParameter("WRITER");
-	String REGDATE = request.getParameter("REGDATE");
-	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	java.util.Date regDate = null;
-	
-	try {
-	    regDate = dateFormat.parse(REGDATE);
-	} catch (ParseException e) {
-	    e.printStackTrace();
-	}
-	
-	LoginDto dto = new LoginDto(SUBJECT, CONTENT, WRITER,  new java.sql.Date(regDate.getTime()));
-	LoginDao dao = new LoginDao();
-	
-	dao.loginChange(dto,"i");
-	
-	
-	
-	response.sendRedirect("list.jsp");
+    String SUBJECT = request.getParameter("SUBJECT");
+    String CONTENT = request.getParameter("CONTENT");
+    String WRITER = request.getParameter("WRITER");
+    String REGDATE = request.getParameter("REGDATE");
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    java.util.Date regDate = null;
+
+    try {
+        regDate = dateFormat.parse(REGDATE);
+    } catch (ParseException e) {
+        e.printStackTrace();
+    }
+
+    java.sql.Date sqlRegDate = new java.sql.Date(regDate.getTime());
+
+    LoginDto dto = new LoginDto();
+    dto.setSUBJECT(SUBJECT);
+    dto.setCONTENT(CONTENT);
+    dto.setWRITER(WRITER);
+    dto.setREGDATE(sqlRegDate);
+
+    LoginDao dao = new LoginDao();
+    dao.insertPro(dto);
+
+    response.sendRedirect("list.jsp");
 %>

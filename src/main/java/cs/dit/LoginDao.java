@@ -29,6 +29,7 @@ import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
  * @author kimga
  *
  */
+
 public class LoginDao {
 	private Connection getConnection() throws Exception {
   
@@ -47,49 +48,65 @@ public class LoginDao {
 		return con;
 	}
 
-	public void insertPro(LoginDto dto) {
+	private void close(Connection con, PreparedStatement pstmt, ResultSet rs) {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	public void insertPro(LoginDto dto) throws Exception {
 		String sql = "INSERT INTO dbcp(SUBJECT, CONTENT, WRITER, REGDATE) VALUES(?, ?, ?, ?)";
 		try (
 			Connection con = getConnection(); 
 			PreparedStatement pstmt = con.prepareStatement(sql);	
 		)
 		{
-		pstmt.setString(2, dto.getSUBJECT());
-		pstmt.setString(3, dto.getCONTENT());
-		pstmt.setString(4, dto.getWRITER());
-		pstmt.setDate(5, dto.getREGDATE());
+		pstmt.setString(1, dto.getSUBJECT());
+		pstmt.setString(2, dto.getCONTENT());
+		pstmt.setString(3, dto.getWRITER());
+		pstmt.setDate(4, dto.getREGDATE());
 
 		pstmt.executeUpdate(); 
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		// TODO: handle exception
+		
 	}
+	
 
 	public ArrayList<LoginDto> list() {
-		String sql = "SELECT * FROM dbcp";
-		ArrayList<LoginDto> dtos = new ArrayList<LoginDto>();
+	    String sql = "SELECT * FROM dbcp";
+	    ArrayList<LoginDto> dtos = new ArrayList<LoginDto>();
 
-		try (Connection con = getConnection();
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);) {
+	    try (Connection con = getConnection();
+	         Statement stmt = con.createStatement();
+	         ResultSet rs = stmt.executeQuery(sql)) {
 
-			while (rs.next()) {
-				LoginDto dto = new LoginDto();
-				dto.setBCODE(rs.getInt("BCODE"));
-				dto.setSUBJECT(rs.getString("SUBJECT"));
-				dto.setCONTENT(rs.getString("CONTENT"));
-				dto.setWRITER(rs.getString("WRITER"));
-				dto.setREGDATE(rs.getDate("REGDATE"));
-				dtos.add(dto);
-			}
+	        while (rs.next()) {
+	            LoginDto dto = new LoginDto();
+	            dto.setBCODE(rs.getInt("BCODE"));
+	            dto.setSUBJECT(rs.getString("SUBJECT"));
+	            dto.setCONTENT(rs.getString("CONTENT"));
+	            dto.setWRITER(rs.getString("WRITER"));
+	            dto.setREGDATE(rs.getDate("REGDATE"));
+	            dtos.add(dto);
+	        }
 
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		
-		return dtos;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return dtos;
 	}
 
 	// 1.접근 제어자
@@ -104,18 +121,17 @@ public class LoginDao {
 	    	psmt.setInt(1, BCODE); // id를 BCODE 대신에 SUBJECT에 대입
 
 	        try (ResultSet rs = psmt.executeQuery();) {
-	            	rs.next(); 
+	            if (rs.next()) { // rs.next() 호출 추가
 	                dto.setBCODE(rs.getInt("BCODE"));
 	                dto.setSUBJECT(rs.getString("SUBJECT"));
 	                dto.setCONTENT(rs.getString("CONTENT"));
 	                dto.setWRITER(rs.getString("WRITER"));
 	                dto.setREGDATE(rs.getDate("REGDATE"));
 	            }
-	        
+	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	    
 
 	    return dto;
 	}
@@ -124,7 +140,7 @@ public class LoginDao {
 
 	
 	public void delete(int bcode) {
-	    String sql = "DELETE FROM dbcp WHERE SUBJECT=?";
+	    String sql = "DELETE FROM dbcp WHERE bcode=?";
 	    try (Connection con = getConnection(); 
 	         PreparedStatement pstmt = con.prepareStatement(sql);) {
 	        pstmt.setInt(1, bcode); // id를 SUBJECT에 대입
@@ -133,65 +149,28 @@ public class LoginDao {
 	        e.printStackTrace();
 	    }
 	}
-	public int udateData(int bcode, LoginDto dto, Connection conn) {
-	    int result = 0;
-	    PreparedStatement pstmt = null;
-	    String sql;
-	    try {
-	        sql = "UPDATE dbcp SET CONTENT=?, SUBJECT=?, WRITER=? WHERE BCODE=?";
-	        pstmt = conn.prepareStatement(sql);
-
-	        pstmt.setString(1, dto.getCONTENT());
-	        pstmt.setString(2, dto.getSUBJECT());
+	public void update(int bcode, LoginDto dto) {
+		
+	    String sql = "UPDATE dbcp SET SUBJECT=?, CONTENT=?, WRITER=?, REGDATE =?  WHERE BCODE=?";
+	    try (Connection con = getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setString(1, dto.getSUBJECT());
+	        pstmt.setString(2, dto.getCONTENT());
 	        pstmt.setString(3, dto.getWRITER());
-	        pstmt.setInt(4, bcode);
-
-	        result = pstmt.executeUpdate();
-	        pstmt.close();
+	        pstmt.setInt(4, dto.getBCODE());
+	        pstmt.setDate(5, dto.getREGDATE());
+	        pstmt.executeUpdate();
 	    } catch (Exception e) {
-	        System.out.println(e.toString());
+	        e.printStackTrace();
 	    }
-	    return result;
 	}
+
 
 	
 /* pstmt.executeUpdate();*/
 
-
+	}
 	
-
-	public void loginChange(LoginDto dto, String flag) {
-	    PreparedStatement pstmt = null;
-	    try (Connection con = getConnection()) {
-	        if (flag.equals("i")) {
-	        	
-	            String sql = "INSERT INTO dbcp(BCODE, SUBJECT, CONTENT, WRITER, REGDATE ) VALUES( ?, ?, ?, ?,sysdate)";
-	            pstmt = con.prepareStatement(sql);
-
-	            pstmt.setInt(1, dto.getBCODE());
-	            pstmt.setString(2, dto.getSUBJECT());
-	            pstmt.setString(3, dto.getCONTENT());
-	            pstmt.setString(4, dto.getWRITER());
-	           
-	            pstmt.close();
-	            
-	        } 
-	        
-	        else if (flag.equals("u")) {
-	        }
-	        
-	        }
-	        	 catch (Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        try {
-	            if (pstmt != null) pstmt.close();
-	        } catch (SQLException e) {
-	        	e.printStackTrace();
-	        }
-	    }
-	}
-	}
 
 
 
