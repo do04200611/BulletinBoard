@@ -47,19 +47,7 @@ public class LoginDao {
         }
     }
 
-    public void insertPro(LoginDto dto) throws Exception {
-        String sql = "INSERT INTO dbcp(SUBJECT, CONTENT, WRITER, REGDATE) VALUES(?, ?, ?, ?)";
-        try (Connection con = getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
-            pstmt.setString(1, dto.getSUBJECT());
-            pstmt.setString(2, dto.getCONTENT());
-            pstmt.setString(3, dto.getWRITER());
-            pstmt.setDate(4, dto.getREGDATE());
-
-            pstmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    
 
     public ArrayList<LoginDto> list() {
     	
@@ -109,57 +97,44 @@ public class LoginDao {
         return dto;
     }
 
-    public int delete(int BCODE) throws Exception {
-        int cnt = 0;
-        String sql = "DELETE FROM dbcp WHERE BCODE = ?";
-        Connection con = null;
+    
+
+
+   
+    public void loginChange(LoginDto dto, String flag) {
         PreparedStatement pstmt = null;
-        
-        try {
-            con = getConnection();
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, BCODE);
-            cnt = pstmt.executeUpdate();
+        try (Connection con = getConnection()) {
+            if (flag.equals("i")) {
+                String sql = "INSERT INTO dbcp(SUBJECT, CONTENT, WRITER, REGDATE) VALUES(?, ?, ?, ?)";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, dto.getSUBJECT());
+                pstmt.setString(2, dto.getCONTENT());
+                pstmt.setString(3, dto.getWRITER());
+                pstmt.setDate(4, new java.sql.Date(dto.getREGDATE().getTime()));
+            } else if (flag.equals("u")) {
+                String sql = "UPDATE dbcp SET CONTENT=?, SUBJECT=?, WRITER=?, REGDATE=? WHERE BCODE=?";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, dto.getSUBJECT());
+                pstmt.setString(2, dto.getCONTENT());
+                pstmt.setString(3, dto.getWRITER());
+                pstmt.setDate(4, new java.sql.Date(dto.getREGDATE().getTime()));
+                pstmt.setInt(5, dto.getBCODE());
+            } else if (flag.equals("d")) {
+                String sql = "DELETE FROM dbcp WHERE BCODE = ?";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setInt(1, dto.getBCODE());
+            }
+
+            pstmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 if (pstmt != null)
                     pstmt.close();
-                if (con != null)
-                    con.close();
-            } catch (Exception e2) {
-                e2.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-        return cnt;
     }
-
-
-
-    public void update(int BCODE, LoginDto dto) {
-        int result = 0;
-        String sql = "UPDATE dbcp SET SUBJECT=?, CONTENT=?, WRITER=?, REGDATE=? WHERE BCODE=?";
-        try (Connection con = getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1, dto.getSUBJECT());
-            pstmt.setString(2, dto.getCONTENT());
-            pstmt.setString(3, dto.getWRITER());
-            pstmt.setDate(4, dto.getREGDATE());
-            pstmt.setInt(5, dto.getBCODE());
-            
-            result = pstmt.executeUpdate(); // 수정 쿼리 실행
-            
-            pstmt.close();
-        } catch (SQLException e) {
-            System.out.println("SQL Exception occurred: " + e.getMessage());
-            // 예외 처리에 따라 적절한 조치를 취할 수 있습니다.
-            // 예를 들어, 로깅, 에러 메시지 출력, 트랜잭션 롤백 등을 수행할 수 있습니다.
-        } catch (Exception e) {
-            System.out.println("Exception occurred: " + e.getMessage());
-            // 예외 처리에 따라 적절한 조치를 취할 수 있습니다.
-        }
-    }
-   
-	}
-
 }

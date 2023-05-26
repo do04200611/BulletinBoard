@@ -11,14 +11,10 @@
     String BCODEParam = request.getParameter("BCODE");
     int BCODE;
     if (BCODEParam != null && !BCODEParam.isEmpty()) {
-    	BCODE = Integer.parseInt(BCODEParam);
+        BCODE = Integer.parseInt(BCODEParam);
         LoginDao dao = LoginDao.getInstance();
-        int cnt = dao.delete(BCODE);
-        if (cnt == 0) {
-            // 삭제된 레코드가 없는 경우에 대한 처리
-        } else {
-            // 삭제된 레코드가 있는 경우에 대한 처리
-        }
+        LoginDto dto = dao.selectOne(BCODE); // 해당 BCODE에 대한 LoginDto 가져오기
+        dao.loginChange(dto, "d"); // 삭제된 레코드에 대한 처리
     }
 %>
 

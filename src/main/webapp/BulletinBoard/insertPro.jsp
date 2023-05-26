@@ -44,7 +44,7 @@
     dto.setREGDATE(sqlRegDate);
 
     LoginDao dao = new LoginDao();
-    dao.insertPro(dto);
+    dao.loginChange(dto, "i");
 
     response.sendRedirect("list.jsp");
 %>

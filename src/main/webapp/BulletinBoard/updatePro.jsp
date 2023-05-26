@@ -25,7 +25,7 @@
   LoginDao dao = LoginDao.getInstance();
   
   try {
-      dao.update(BCODE, dto); // BCODE와 DTO를 update 메소드에 전달
+      dao.loginChange(dto, "u"); // 수정된 코드를 적용
       out.println("<script>alert('수정되었습니다!'); location.href = 'list.jsp';</script>");
   } catch (Exception e) {
       out.println("<script>alert('Exception occurred: " + e.getMessage() + "');</script>");
