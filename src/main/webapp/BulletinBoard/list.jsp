@@ -5,12 +5,11 @@
 <%@page import="cs.dit.LoginDto" %>  
 <%@page import="java.util.Date"%>
 
-
 <%
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	LoginDao manager = LoginDao.getInstance();
-	ArrayList<LoginDto> dtos = manager.list();
-%>	
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    LoginDao manager = LoginDao.getInstance();
+    ArrayList<LoginDto> dtos = manager.list();
+%>    
 
 <!DOCTYPE html>
 <html>
@@ -23,15 +22,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div class="container">
-		<br>
-		<h1 class="text-center font-weight-bold">사용자 정보</h1>
-		<br>
-		<table class="table table-hover">
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>내용</th>
+    <div class="container">
+        <br>
+        <h1 class="text-center font-weight-bold">사용자 정보</h1>
+        <br>
+        <table class="table table-hover">
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>내용</th>
 				<th>작성자</th>
 				<th>작성일</th>
 			</tr>
@@ -41,7 +40,7 @@
 				String formattedDate = regDate != null ? sdf.format(regDate) : "N/A";
 			%>
 			<tr>
-				<td><a href="insertUpdateForm.jsp?id=<%=dto.getBCODE() %>"><%=dto.getBCODE() %></a></td>
+				<td><a href="insertUpdateForm.jsp?id=<%=dto.getBCODE()%>"><%=dto.getBCODE()%></a></td>
 				<td><%=dto.getSUBJECT()%></td>
 				<td><%=dto.getCONTENT()%></td>
 				<td><%=dto.getWRITER()%></td>

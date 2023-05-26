@@ -11,19 +11,20 @@
 <%@ page import="cs.dit.LoginDao" %>
 <%@ page import="cs.dit.LoginDto" %>
 <%
-Integer bcode = null;
+Integer BCODE = null;
 String SUBJECT = "";
 String CONTENT = "";
 String WRITER = "";
 Date REGDATE = null; // Initialize with null value
 
-String bcodeParam = request.getParameter("BCODE");
-if (bcodeParam != null && !bcodeParam.isEmpty()) {
-  bcode = Integer.parseInt(bcodeParam);
+String BCODEParam = request.getParameter("BCODE");
+if (BCODEParam != null && !BCODEParam.isEmpty()) {
+	BCODE = Integer.parseInt(BCODEParam);
   LoginDto dto = new LoginDto();
   LoginDao dao = new LoginDao(); // Make sure to instantiate the dao object
-
-  dto = dao.selectOne(bcode);
+  out.println(BCODE);
+  
+  dto = dao.selectOne(BCODE);
 
   if (dto != null) {
     SUBJECT = dto.getSUBJECT();
@@ -52,8 +53,8 @@ if (bcodeParam != null && !bcodeParam.isEmpty()) {
 
     <form action="updatePro.jsp" method="post">
       <div class="form-group">
-        <label for="bcode">bcode:</label>
-        <input type="text" class="form-control" id="bcode" name="bcode" value="<%= bcode %>">
+        <label for="BCODE">BCODE:</label>
+        <input type="text" class="form-control" id="BCODE" name="BCODE" value="<%= BCODE %>">
       </div>
 
       <div class="form-group">
@@ -78,8 +79,8 @@ if (bcodeParam != null && !bcodeParam.isEmpty()) {
 
       <br>
       <div class="text-center">
-        <input type="submit" value="변경" class="btn btn-secondary">  
-        <input type="button" value="삭제" class="btn btn-secondary" onclick="location.href='delete.jsp?id=<%= bcode %>'">
+        <input type="submit" value="변경" class="btn btn-secondary" onclick="location.href='updatePro.jsp?bCODE=<%= BCODE %>'">  
+        <input type="button" value="삭제" class="btn btn-secondary" onclick="location.href='delete.jsp?bCODE=<%= BCODE %>'">
         <input type="button" value="목록" class="btn btn-secondary" onclick="location.href='list.jsp'">
       </div>
     </form>

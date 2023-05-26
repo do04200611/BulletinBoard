@@ -2,12 +2,12 @@
 <%@ page import="cs.dit.LoginDao" %>
 <%@ page import="cs.dit.LoginDto" %>
 <%@ page import="java.sql.*" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.sql.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
-  String bcodeParam = request.getParameter("bcode");
-  int bcode = 0;
-  if (StringUtils.isNotEmpty(bcodeParam) && StringUtils.isNumeric(bcodeParam)) {
-    bcode = Integer.parseInt(bcodeParam);
+  String BCODEParam = request.getParameter("BCODE");
+  int BCODE = 0;
+  if (StringUtils.isNotEmpty(BCODEParam) && StringUtils.isNumeric(BCODEParam)) {
+	  BCODE = Integer.parseInt(BCODEParam);
   }
 
   String SUBJECT = request.getParameter("SUBJECT");
@@ -16,14 +16,14 @@
   Timestamp regDate = new Timestamp(System.currentTimeMillis());
 
   LoginDto dto = new LoginDto();
-  dto.setBCODE(bcode); // Set the bcode in the DTO
+  dto.setBCODE(BCODE); // DTO에 BCODE 설정
   dto.setSUBJECT(SUBJECT);
   dto.setCONTENT(CONTENT);
   dto.setWRITER(WRITER);
   dto.setREGDATE(new java.sql.Date(regDate.getTime()));
 
-  LoginDao dao = new LoginDao();
-  dao.update(bcode, dto); // Pass the bcode and the DTO to the update method
+  LoginDao dao = LoginDao.getInstance();
+  dao.update(BCODE, dto); // BCODE와 DTO를 update 메소드에 전달
 %>		    
 
 <script>
