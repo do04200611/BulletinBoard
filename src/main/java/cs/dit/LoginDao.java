@@ -62,6 +62,7 @@ public class LoginDao {
     }
 
     public ArrayList<LoginDto> list() {
+    	
         String sql = "SELECT * FROM dbcp";
         ArrayList<LoginDto> dtos = new ArrayList<LoginDto>();
 
@@ -136,7 +137,7 @@ public class LoginDao {
 
 
 
-    public void update(int bcode, LoginDto dto) {
+    public void update(int BCODE, LoginDto dto) {
         int result = 0;
         String sql = "UPDATE dbcp SET SUBJECT=?, CONTENT=?, WRITER=?, REGDATE=? WHERE BCODE=?";
         try (Connection con = getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -145,12 +146,18 @@ public class LoginDao {
             pstmt.setString(3, dto.getWRITER());
             pstmt.setDate(4, dto.getREGDATE());
             pstmt.setInt(5, dto.getBCODE());
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date regDate = null;
-            result = pstmt.executeUpdate();
+            
+            result = pstmt.executeUpdate(); // 수정 쿼리 실행
+            
             pstmt.close();
+        } catch (SQLException e) {
+            System.out.println("SQL Exception occurred: " + e.getMessage());
+            // 예외 처리에 따라 적절한 조치를 취할 수 있습니다.
+            // 예를 들어, 로깅, 에러 메시지 출력, 트랜잭션 롤백 등을 수행할 수 있습니다.
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println("Exception occurred: " + e.getMessage());
+            // 예외 처리에 따라 적절한 조치를 취할 수 있습니다.
         }
     }
+
 }

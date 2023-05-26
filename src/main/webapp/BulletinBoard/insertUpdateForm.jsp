@@ -11,6 +11,7 @@
 <%@ page import="cs.dit.LoginDao" %>
 <%@ page import="cs.dit.LoginDto" %>
 <%
+
 Integer BCODE = null;
 String SUBJECT = "";
 String CONTENT = "";
@@ -79,8 +80,8 @@ if (BCODEParam != null && !BCODEParam.isEmpty()) {
 
       <br>
       <div class="text-center">
-        <input type="submit" value="변경" class="btn btn-secondary" onclick="location.href='updatePro.jsp?bCODE=<%= BCODE %>'">  
-        <input type="button" value="삭제" class="btn btn-secondary" onclick="location.href='delete.jsp?bCODE=<%= BCODE %>'">
+        <input type="submit" value="변경" class="btn btn-secondary" onclick="location.href='updatePro.jsp?BCODE=<%= BCODE %>'">  
+        <input type="button" value="삭제" class="btn btn-secondary" onclick="location.href='delete.jsp?BCODE=<%= BCODE %>'">
         <input type="button" value="목록" class="btn btn-secondary" onclick="location.href='list.jsp'">
       </div>
     </form>

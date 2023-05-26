@@ -7,7 +7,7 @@
   String BCODEParam = request.getParameter("BCODE");
   int BCODE = 0;
   if (StringUtils.isNotEmpty(BCODEParam) && StringUtils.isNumeric(BCODEParam)) {
-	  BCODE = Integer.parseInt(BCODEParam);
+      BCODE = Integer.parseInt(BCODEParam);
   }
 
   String SUBJECT = request.getParameter("SUBJECT");
@@ -23,10 +23,11 @@
   dto.setREGDATE(new java.sql.Date(regDate.getTime()));
 
   LoginDao dao = LoginDao.getInstance();
-  dao.update(BCODE, dto); // BCODE와 DTO를 update 메소드에 전달
-%>		    
-
-<script>
-  alert("수정되었습니다!");
-  location.href = 'list.jsp';
-</script>
+  
+  try {
+      dao.update(BCODE, dto); // BCODE와 DTO를 update 메소드에 전달
+      out.println("<script>alert('수정되었습니다!'); location.href = 'list.jsp';</script>");
+  } catch (Exception e) {
+      out.println("<script>alert('Exception occurred: " + e.getMessage() + "');</script>");
+  }
+%>

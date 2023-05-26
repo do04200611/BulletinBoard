@@ -6,6 +6,7 @@
 <%@page import="java.util.Date"%>
 
 <%
+	
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     LoginDao manager = LoginDao.getInstance();
     ArrayList<LoginDto> dtos = manager.list();
@@ -40,7 +41,7 @@
 				String formattedDate = regDate != null ? sdf.format(regDate) : "N/A";
 			%>
 			<tr>
-				<td><a href="insertUpdateForm.jsp?id=<%=dto.getBCODE()%>"><%=dto.getBCODE()%></a></td>
+				<td><a href="insertUpdateForm.jsp?BCODE=<%=dto.getBCODE()%>&SUBJECT=<%=dto.getSUBJECT()%>&CONTENT=<%=dto.getCONTENT()%>&WRITER=<%=dto.getWRITER()%>&REGDATE=<%=dto.getREGDATE()%>"><%=dto.getBCODE()%></a></td>
 				<td><%=dto.getSUBJECT()%></td>
 				<td><%=dto.getCONTENT()%></td>
 				<td><%=dto.getWRITER()%></td>
