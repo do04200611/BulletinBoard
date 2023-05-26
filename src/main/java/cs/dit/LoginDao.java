@@ -1,6 +1,5 @@
 package cs.dit;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -31,6 +29,7 @@ import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
  */
 
 public class LoginDao {
+	private static LoginDao instance;
 	private Connection getConnection() throws Exception {
   
 
@@ -47,6 +46,13 @@ public class LoginDao {
 		
 		return con;
 	}
+	public static LoginDao getInstance() {
+		
+        if (instance == null) {
+            instance = new LoginDao();
+        }
+        return instance;
+    }
 
 	private void close(Connection con, PreparedStatement pstmt, ResultSet rs) {
         try {
@@ -63,6 +69,7 @@ public class LoginDao {
             e.printStackTrace();
         }
     }
+	
 	public void insertPro(LoginDto dto) throws Exception {
 		String sql = "INSERT INTO dbcp(SUBJECT, CONTENT, WRITER, REGDATE) VALUES(?, ?, ?, ?)";
 		try (
@@ -109,6 +116,7 @@ public class LoginDao {
 	    return dtos;
 	}
 
+
 	// 1.접근 제어자
 	// 2.반환 데이터 타입
 	// 3. 입력 매개변수
@@ -138,18 +146,18 @@ public class LoginDao {
 
 
 
-	
 	public void delete(int bcode) {
-	    String sql = "DELETE FROM dbcp WHERE BCODE=?";
+	    String sql = "DELETE FROM dbcp WHERE BCODE = ?";
 	    try (Connection con = getConnection();
 	         PreparedStatement pstmt = con.prepareStatement(sql)) {
 	        pstmt.setInt(1, bcode);
 	        pstmt.executeUpdate();
-	        pstmt.close();
 	    } catch (Exception e) {
-	        System.out.println(e.toString());
+	        e.printStackTrace();
 	    }
 	}
+
+
 
 	public void update(int bcode, LoginDto dto) {
 		int result = 0;

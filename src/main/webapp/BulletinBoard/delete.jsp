@@ -3,12 +3,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="java.sql.*"%>
+<%@page import="java.net.*" %>
 
 <%
-    String bcode = request.getParameter("bcode");
-    if (bcode != null && !bcode.isEmpty()) {
+    request.setCharacterEncoding("UTF-8");
+    String cp = request.getContextPath();
+    String bcodeParam = request.getParameter("BCODE");
+    if (bcodeParam != null && !bcodeParam.isEmpty()) {
+        int bcode = Integer.parseInt(bcodeParam);
         LoginDao dao = new LoginDao();
-        dao.delete(Integer.parseInt(bcode));
+        dao.delete(bcode);
     }
 %>
 

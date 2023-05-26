@@ -7,7 +7,7 @@
  *
  *===============================*/
  %>
- <%@page import="cs.dit.LoginDao" %>  
+<%@page import="cs.dit.LoginDao" %>  
 <%@page import="cs.dit.LoginDto" %>  
 <%@page import="java.sql.*"%>
 <%@page import="java.text.*"%>
@@ -32,7 +32,10 @@
         e.printStackTrace();
     }
 
-    java.sql.Date sqlRegDate = new java.sql.Date(regDate.getTime());
+    java.sql.Date sqlRegDate = null;
+    if (regDate != null) {
+        sqlRegDate = new java.sql.Date(regDate.getTime());
+    }
 
     LoginDto dto = new LoginDto();
     dto.setSUBJECT(SUBJECT);

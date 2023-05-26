@@ -45,8 +45,8 @@ public class LoginDto {
         return REGDATE;
     }
 
-    public void setREGDATE(Date REGDATE) {
-        REGDATE = REGDATE;
+    public void setREGDATE(Date regDate) {
+        REGDATE = regDate;
     }
 
     public LoginDto() {
