@@ -34,6 +34,16 @@ if (BCODEParam != null && !BCODEParam.isEmpty()) {
     REGDATE = dto.getREGDATE();
   }
 }
+//Date 형식의 날짜를 문자열로 변환하여 입력 받음
+String REGDATEParam = request.getParameter("REGDATE");
+if (REGDATEParam != null && !REGDATEParam.isEmpty()) {
+ try {
+     REGDATE = Date.valueOf(REGDATEParam);
+ } catch (IllegalArgumentException e) {
+     // 잘못된 형식의 날짜 입력 처리
+     e.printStackTrace();
+ }
+}
 %>
 
 <!DOCTYPE html>
@@ -44,7 +54,7 @@ if (BCODEParam != null && !BCODEParam.isEmpty()) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script rc="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
   <div class="container">

@@ -2,8 +2,10 @@
 <%@ page import="cs.dit.LoginDao" %>
 <%@ page import="cs.dit.LoginDto" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
+  request.setCharacterEncoding("UTF-8");
   String BCODEParam = request.getParameter("BCODE");
   int BCODE = 0;
   if (StringUtils.isNotEmpty(BCODEParam) && StringUtils.isNumeric(BCODEParam)) {
@@ -13,7 +15,7 @@
   String SUBJECT = request.getParameter("SUBJECT");
   String CONTENT = request.getParameter("CONTENT");
   String WRITER = request.getParameter("WRITER");
-  Timestamp regDate = new Timestamp(System.currentTimeMillis());
+  Date regDate = new Date(System.currentTimeMillis());
 
   LoginDto dto = new LoginDto();
   dto.setBCODE(BCODE); // DTO에 BCODE 설정

@@ -6,10 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
+import java.sql.Date;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -63,7 +62,7 @@ public class LoginDao {
                 dto.setSUBJECT(rs.getString("SUBJECT"));
                 dto.setCONTENT(rs.getString("CONTENT"));
                 dto.setWRITER(rs.getString("WRITER"));
-                dto.setREGDATE(rs.getDate("REGDATE"));
+                dto.setREGDATE(rs.getDate("REGDATE")); 
                 dtos.add(dto);
             }
 
@@ -112,7 +111,7 @@ public class LoginDao {
                 pstmt.setString(3, dto.getWRITER());
                 pstmt.setDate(4, new java.sql.Date(dto.getREGDATE().getTime()));
             } else if (flag.equals("u")) {
-                String sql = "UPDATE dbcp SET CONTENT=?, SUBJECT=?, WRITER=?, REGDATE=? WHERE BCODE=?";
+                String sql = "UPDATE dbcp SET SUBJECT=?, CONTENT=?, WRITER=?, REGDATE=? WHERE BCODE=?";
                 pstmt = con.prepareStatement(sql);
                 pstmt.setString(1, dto.getSUBJECT());
                 pstmt.setString(2, dto.getCONTENT());

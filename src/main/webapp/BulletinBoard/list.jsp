@@ -6,10 +6,11 @@
 <%@page import="java.util.Date"%>
 
 <%
+	request.setCharacterEncoding("UTF-8");
 	
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    LoginDao manager = LoginDao.getInstance();
-    ArrayList<LoginDto> dtos = manager.list();
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	LoginDao manager = LoginDao.getInstance();
+	ArrayList<LoginDto> dtos = manager.list();
 %>    
 
 <!DOCTYPE html>
@@ -45,7 +46,7 @@
 				<td><%=dto.getSUBJECT()%></td>
 				<td><%=dto.getCONTENT()%></td>
 				<td><%=dto.getWRITER()%></td>
-				<td><%=formattedDate%></td>
+				<td><%=dto.getREGDATE()%></td>
 			</tr>
 			<%
 			}

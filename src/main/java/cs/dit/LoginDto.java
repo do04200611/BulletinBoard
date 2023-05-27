@@ -7,7 +7,7 @@ public class LoginDto {
     private String SUBJECT;
     private String CONTENT;
     private String WRITER;
-    private Date REGDATE;
+    private Date  REGDATE;
 
     public Integer getBCODE() {
         return BCODE;
@@ -45,7 +45,7 @@ public class LoginDto {
         return REGDATE;
     }
 
-    public void setREGDATE(Date regDate) {
+    public void setREGDATE(Date  regDate) {
         REGDATE = regDate;
     }
 
@@ -58,7 +58,7 @@ public class LoginDto {
         this.CONTENT = CONTENT;
     }
 
-    public LoginDto(String SUBJECT, String CONTENT, String WRITER, Date REGDATE) {
+    public LoginDto(String SUBJECT, String CONTENT, String WRITER, Date  REGDATE) {
         this.SUBJECT = SUBJECT;
         this.CONTENT = CONTENT;
         this.WRITER = WRITER;
