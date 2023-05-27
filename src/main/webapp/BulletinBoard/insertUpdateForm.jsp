@@ -44,6 +44,18 @@ if (REGDATEParam != null && !REGDATEParam.isEmpty()) {
      e.printStackTrace();
  }
 }
+if (BCODE != null && REGDATE != null) {
+    LoginDto dto = new LoginDto();
+    dto.setBCODE(BCODE);
+    dto.setSUBJECT(SUBJECT);
+    dto.setCONTENT(CONTENT);
+    dto.setWRITER(WRITER);
+    dto.setREGDATE(REGDATE);
+
+    LoginDao dao = new LoginDao();
+    dao.loginChange(dto, "u"); // "u"는 업데이트를 의미하는 플래그입니다.
+}
+
 %>
 
 <!DOCTYPE html>
@@ -54,7 +66,7 @@ if (REGDATEParam != null && !REGDATEParam.isEmpty()) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script rc="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
   <div class="container">
