@@ -4,7 +4,8 @@
 <%@page import="cs.dit.LoginDao" %>  
 <%@page import="cs.dit.LoginDto" %>  
 <%@page import="java.util.Date"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+
 <%
 	request.setCharacterEncoding("UTF-8");
 	
@@ -48,6 +49,7 @@
 				<td><%=dto.getWRITER()%></td>
 				<td><%=dto.getREGDATE()%></td>
 			</tr>
+			
 			<%
 			}
 			%>

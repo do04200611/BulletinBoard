@@ -1,4 +1,5 @@
-<%@ page import="org.apache.commons.lang3.StringUtils" %>
+<%@page import="org.apache.*" %>
+<%@ page import="org.apache.commons.lang3.StringUtisl" %> 
 <%@ page import="cs.dit.LoginDao" %>
 <%@ page import="cs.dit.LoginDto" %>
 <%@ page import="java.sql.*" %>
@@ -10,7 +11,7 @@
   int BCODE = 0;
   if (StringUtils.isNotEmpty(BCODEParam) && StringUtils.isNumeric(BCODEParam)) {
       BCODE = Integer.parseInt(BCODEParam);
-  }
+  } 
 
   String SUBJECT = request.getParameter("SUBJECT");
   String CONTENT = request.getParameter("CONTENT");

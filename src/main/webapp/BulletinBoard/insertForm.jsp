@@ -19,7 +19,7 @@
 		<br>
 		<h2 class="text-center font-weight-bold">사용자 입력</h2>
 		<hr>
-		<form action="insertPro.jsp" method="post">
+		<form action="insert.do" method="post">
 	    <div class="form-group">
 	      <label for="SUBJECT">제목:</label>
 	      <input type="text" class="form-control" id="SUBJECT" name="SUBJECT">
